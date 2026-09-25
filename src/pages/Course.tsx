@@ -9,9 +9,11 @@ import type { UseStatType } from "../components/course/hooks/useLibrary";
 import { useToggle } from "../shared/hooks/useToggle";
 const Course = () => {
   const { toggle, toggleUi } = useToggle();
-  const { handleSave, inputValue, setInputValue, savedCourse } = useCourse();
   const { setCurrentWatch, handleCurrentNavAndValue } =
     useOutletContext<UseStatType>();
+  const { handleSave, handleDelete, inputValue, setInputValue, savedCourse } =
+    useCourse(setCurrentWatch);
+
   return (
     <div className="relative overflow-hidden">
       <CourseNav
@@ -23,6 +25,7 @@ const Course = () => {
         <div className="bg-gray-800 w-full">
           <CourseLibrary
             handleCurrentNavAndValue={handleCurrentNavAndValue}
+            handleDelete={handleDelete}
             setCurrentWatch={setCurrentWatch}
             savedCourse={savedCourse}
           />

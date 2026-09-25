@@ -1,4 +1,4 @@
-import type { UseCourseType } from "../hooks/useCourse";
+import type { InputType, UseCourseType } from "../hooks/useCourse";
 
 const AddCourse = ({
   handleSave,
@@ -31,6 +31,13 @@ const AddCourse = ({
         />
 
         <select
+          value={inputValue.category}
+          onChange={(e) =>
+            setInputValue((prev) => ({
+              ...prev,
+              category: e.target.value as InputType["category"],
+            }))
+          }
           name="category"
           className="w-full rounded-lg border px-4 py-3 outline-none"
         >
@@ -43,6 +50,13 @@ const AddCourse = ({
 
         <select
           name="difficulty"
+          value={inputValue.difficulty}
+          onChange={(e) =>
+            setInputValue((prev) => ({
+              ...prev,
+              difficulty: e.target.value as InputType["difficulty"],
+            }))
+          }
           className="w-full rounded-lg border px-4 py-3 outline-none"
         >
           <option value="">Select difficulty</option>

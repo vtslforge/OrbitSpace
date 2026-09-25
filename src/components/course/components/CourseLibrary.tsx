@@ -3,12 +3,14 @@ import type { InputType } from "../hooks/useCourse";
 
 type CourseLibraryProps = {
   savedCourse: InputType[];
+  handleDelete: (id: string) => void;
   setCurrentWatch: Dispatch<SetStateAction<InputType[] | undefined>>;
   handleCurrentNavAndValue: (course: InputType) => void;
 };
 
 const CourseLibrary = ({
   savedCourse,
+  handleDelete,
   handleCurrentNavAndValue,
 }: CourseLibraryProps) => {
   return (
@@ -70,15 +72,23 @@ const CourseLibrary = ({
                   <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-gray-400">
                     {saved.description || "No description provided."}
                   </p>
-
+                  <p className="mt-2 line-clamp-2 min-h-10 text-sm leading-5 text-gray-400">
+                    {saved.category || "No description provided."}
+                  </p>
                   {/* Footer */}
                   <div className="mt-5 flex items-center justify-between border-t border-gray-800 pt-4">
                     <button
-
                       onClick={() => handleCurrentNavAndValue(saved)}
                       className="rounded-lg bg-white px-3 py-2 text-sm font-medium text-gray-900 transition hover:bg-gray-200"
                     >
                       Open Course
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => saved.id && handleDelete(saved.id)}
+                      className="rounded-lg border border-red-500/50 px-3 py-2 text-sm font-medium text-red-400 transition hover:bg-red-500/10"
+                    >
+                      Delete
                     </button>
                   </div>
                 </div>

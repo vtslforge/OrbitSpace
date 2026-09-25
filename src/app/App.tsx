@@ -8,6 +8,7 @@ import Dashboard from "../pages/Dashboard";
 import Task from "../pages/Task";
 import Course from "../pages/Course";
 import VideoPlayer from "../components/course/components/VideoPlayer";
+import Bookmarks from "../pages/Bookmarks";
 
 const App = () => {
   return (
@@ -64,7 +65,8 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/todo" element={<Task />} />
-          <Route path="/course" element={<Course />} />
+          <Route path="/library" element={<Course />} />
+          <Route path="/bookmarks" element={<Bookmarks/>} />
           <Route path="/player/:url" element={<VideoPlayer />} />
         </Route>
       </Route>
