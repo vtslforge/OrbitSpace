@@ -1,9 +1,9 @@
 import { useUser } from "@clerk/react";
 
-function userData() {
+function useCurrentUser() {
   const { user } = useUser();
   const username = user?.firstName;
   return username;
 }
 
-export default userData
+export default useCurrentUser;

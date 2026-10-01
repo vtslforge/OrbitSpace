@@ -6,49 +6,62 @@ const AddCourse = ({
   setInputValue,
 }: UseCourseType) => {
   return (
-    <div className="    flex justify-center items-center">
-      <form onSubmit={handleSave} className="space-y-4">
-        <input
+    <form onSubmit={handleSave} className="form-stack">
+        <label className="form-field">
+          Course title
+          <input
+          required
           value={inputValue.title}
           onChange={(e) =>
             setInputValue((prev) => ({ ...prev, title: e.target.value }))
           }
           type="text"
           name="title"
-          placeholder="Course title"
-          className="w-full rounded-lg border px-4 py-3 outline-none"
-        />
+          placeholder="e.g. Product design fundamentals"
+          className="field-control"
+          />
+        </label>
 
-        <textarea
+        <label className="form-field">
+          Description
+          <textarea
           value={inputValue.description}
           onChange={(e) =>
             setInputValue((prev) => ({ ...prev, description: e.target.value }))
           }
           name="description"
-          placeholder="Course description"
-          rows={4}
-          className="w-full rounded-lg border px-4 py-3 outline-none"
-        />
+          placeholder="What will you learn?"
+          rows={3}
+          className="field-control"
+          />
+        </label>
 
-        <select
-          value={inputValue.category}
+        <label className="form-field">
+          Category
+          <select
+          required
+          value={inputValue.category === "None" ? "" : inputValue.category}
           onChange={(e) =>
             setInputValue((prev) => ({
               ...prev,
-              category: e.target.value as InputType["category"],
+              category: (e.target.value || "None") as InputType["category"],
             }))
           }
           name="category"
-          className="w-full rounded-lg border px-4 py-3 outline-none"
+          className="field-control"
         >
-          <option value="">Select category</option>
-          <option value="programming">Programming</option>
-          <option value="web-development">Web Development</option>
-          <option value="design">Design</option>
-          <option value="business">Business</option>
+          <option value="" disabled>Select category</option>
+          <option value="Programming">Programming</option>
+          <option value="Life Skill">Life Skill</option>
+          <option value="Design">Design</option>
+          <option value="Business">Business</option>
+          <option value="Custom">Custom</option>
         </select>
+        </label>
 
-        <select
+        <label className="form-field">
+          Difficulty
+          <select
           name="difficulty"
           value={inputValue.difficulty}
           onChange={(e) =>
@@ -57,33 +70,36 @@ const AddCourse = ({
               difficulty: e.target.value as InputType["difficulty"],
             }))
           }
-          className="w-full rounded-lg border px-4 py-3 outline-none"
+          className="field-control"
         >
-          <option value="">Select difficulty</option>
-          <option value="beginner">Beginner</option>
-          <option value="intermediate">Intermediate</option>
-          <option value="advanced">Advanced</option>
+          <option value="Beginner">Beginner</option>
+          <option value="Intermediate">Intermediate</option>
+          <option value="Advanced">Advanced</option>
         </select>
+        </label>
 
-        <input
+        <label className="form-field">
+          Course video URL
+          <input
+          required
           value={inputValue.url}
           onChange={(e) =>
             setInputValue((prev) => ({ ...prev, url: e.target.value }))
           }
           type="url"
           name="videoUrl"
-          placeholder="Video link"
-          className="w-full rounded-lg border px-4 py-3 outline-none"
-        />
+          placeholder="https://..."
+          className="field-control"
+          />
+        </label>
 
         <button
           type="submit"
-          className="w-full rounded-lg px-4 py-3 font-medium"
+          className="primary-button w-full"
         >
-          Save Course
+          Save course
         </button>
       </form>
-    </div>
   );
 };
 

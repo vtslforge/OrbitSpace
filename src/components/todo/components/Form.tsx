@@ -1,14 +1,18 @@
 import type { useTaskCreationType, taskValuesType } from "../taskTypes";
 
-const Form = ({ handleSave, inputData, setInputData }: useTaskCreationType) => {
-  return (
-    <div className="w-80 shrink-0 rounded-2xl border border-gray-300 bg-white p-5 shadow-sm">
-      <p className="mb-5 text-xl font-semibold text-gray-800">New Task</p>
+type FormProps = Pick<useTaskCreationType, "handleSave" | "inputData" | "setInputData">;
 
-      <form onSubmit={handleSave} className="flex flex-col gap-4">
-        {/* User input for task title */}
-        <input
+const Form = ({ handleSave, inputData, setInputData }: FormProps) => {
+  return (
+    <section className="task-form-panel">
+      <h2 className="mb-4 text-base font-semibold text-gray-900">New task</h2>
+
+      <form onSubmit={handleSave} className="form-stack">
+        <label className="form-field">
+          Task title
+          <input
           required
+          value={inputData.title}
           onChange={(e) =>
             setInputData((prev) => ({
               ...prev,
@@ -16,24 +20,29 @@ const Form = ({ handleSave, inputData, setInputData }: useTaskCreationType) => {
             }))
           }
           type="text"
-          placeholder="Task title"
-          className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+          placeholder="What needs to get done?"
+          className="field-control"
         />
-        {/* user input for task description */}
-        <input
+        </label>
+        <label className="form-field">
+          Details
+          <textarea
           required
+          value={inputData.description}
           onChange={(e) =>
             setInputData((prev) => ({
               ...prev,
               description: e.target.value,
             }))
           }
-          type="text"
-          placeholder="Enter description"
-          className="rounded-lg border border-gray-300 px-3 py-2.5 text-sm outline-none transition focus:border-gray-500 focus:ring-2 focus:ring-gray-200"
+          placeholder="Add useful context"
+          className="field-control"
+          rows={3}
         />
-        {/* input for task priority */}
-        <select
+        </label>
+        <label className="form-field">
+          Priority
+          <select
           value={inputData.priority}
           onChange={(e) =>
             setInputData((prev) => ({
@@ -41,14 +50,16 @@ const Form = ({ handleSave, inputData, setInputData }: useTaskCreationType) => {
               priority: e.target.value as taskValuesType["priority"],
             }))
           }
-          className="rounded-lg border p-2"
+          className="field-control"
         >
           <option value="High">High</option>
           <option value="Normal">Normal</option>
           <option value="Low">Low</option>
         </select>
-        {/* user date selection */}
-        <input
+        </label>
+        <label className="form-field">
+          Due date
+          <input
           type="date"
           value={inputData.dueDate}
           onChange={(e) =>
@@ -57,16 +68,17 @@ const Form = ({ handleSave, inputData, setInputData }: useTaskCreationType) => {
               dueDate: e.target.value,
             }))
           }
-          className="rounded-lg border p-2"
+          className="field-control"
         />
+        </label>
         <button
           type="submit"
-          className="rounded-lg bg-black px-4 py-2.5 text-sm font-medium text-white transition hover:bg-gray-800 active:scale-[0.98]"
+          className="primary-button w-full"
         >
-          Save Task
+          Save task
         </button>
       </form>
-    </div>
+    </section>
   );
 };
 

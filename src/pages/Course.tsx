@@ -7,6 +7,7 @@ import { useCourse } from "../components/course/hooks/useCourse";
 import type { UseStatType } from "../components/course/hooks/useLibrary";
 
 import { useToggle } from "../shared/hooks/useToggle";
+
 const Course = () => {
   const { toggle, toggleUi } = useToggle();
   const { setCurrentWatch, handleCurrentNavAndValue } =
@@ -15,29 +16,27 @@ const Course = () => {
     useCourse(setCurrentWatch);
 
   return (
-    <div className="relative overflow-hidden">
+    <div className="page-content">
       <CourseNav
         savedCourse={savedCourse}
         toggle={toggle}
         toggleUi={toggleUi}
       />
-      <div className="border flex">
-        <div className="bg-gray-800 w-full">
-          <CourseLibrary
-            handleCurrentNavAndValue={handleCurrentNavAndValue}
-            handleDelete={handleDelete}
-            setCurrentWatch={setCurrentWatch}
-            savedCourse={savedCourse}
-          />
-        </div>
+      <div className="library-layout">
+        <CourseLibrary
+          handleCurrentNavAndValue={handleCurrentNavAndValue}
+          handleDelete={handleDelete}
+          savedCourse={savedCourse}
+        />
         {toggle && (
-          <div className="h-200 w-1/5 flex justify-center items-center bg-amber-600">
+          <section className="create-panel">
+            <h2>Add a course</h2>
             <AddCourse
               handleSave={handleSave}
               inputValue={inputValue}
               setInputValue={setInputValue}
             />
-          </div>
+          </section>
         )}
       </div>
     </div>

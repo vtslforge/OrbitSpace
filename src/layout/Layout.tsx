@@ -16,9 +16,9 @@ const Layout = () => {
   const bookmarksSavedFavourate = useBookmark();
 
   return (
-    <div className="flex">
+    <div className="workspace-shell flex">
       <Sidebar />
-      <main className="w-full">
+      <main className="workspace-main">
         <Outlet
           context={{
             ...toggleFormState,

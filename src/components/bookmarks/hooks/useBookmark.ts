@@ -1,6 +1,19 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { SubmitEvent } from "react";
 import type { AddBookmarkType, UseBookmarkType } from "./BookmarkTypes";
+import { isRecord, useUserStorage } from "../../../shared/hooks/useUserStorage";
+
+function isBookmarkList(value: unknown): value is AddBookmarkType[] {
+  return Array.isArray(value) && value.every((bookmark) =>
+    isRecord(bookmark) &&
+    typeof bookmark.id === "string" &&
+    typeof bookmark.title === "string" &&
+    typeof bookmark.description === "string" &&
+    typeof bookmark.isFavorite === "boolean" &&
+    typeof bookmark.category === "string" &&
+    typeof bookmark.url === "string",
+  );
+}
 
 export function useBookmark(): UseBookmarkType {
   const [bookmarkInput, setBookmarkInput] = useState<AddBookmarkType>({
@@ -12,24 +25,7 @@ export function useBookmark(): UseBookmarkType {
     url: "",
   });
 
-  const [savedBookmarks, setSavedBookmarks] = useState<AddBookmarkType[]>(
-    () => {
-      const savedBookmarks = localStorage.getItem("savedBookmarks");
-      if (!savedBookmarks) {
-        return [];
-      }
-
-      try {
-        return JSON.parse(savedBookmarks);
-      } catch {
-        return [];
-      }
-    },
-  );
-
-  useEffect(() => {
-    localStorage.setItem("savedBookmarks", JSON.stringify(savedBookmarks));
-  }, [savedBookmarks]);
+  const [savedBookmarks, setSavedBookmarks] = useUserStorage("savedBookmarks", [], isBookmarkList);
 
   const handleBookmarkSave = (e?: SubmitEvent<HTMLFormElement>) => {
     e?.preventDefault();

@@ -11,7 +11,6 @@ const Todo = () => {
     handleSave,
     inputData,
     setInputData,
-    savedData,
     handleDelete,
     filter,
     handleFilter,
@@ -20,7 +19,7 @@ const Todo = () => {
   } = useOutletContext<TodoOutletContext>();
 
   return (
-    <div className="h-full w-full">
+    <div>
       <Header toggleForm={toggleForm} />
       <FilterUi filter={filter} handleFilter={handleFilter} filters={filters} />
       <TaskContainer
@@ -29,10 +28,7 @@ const Todo = () => {
         handleSave={handleSave}
         inputData={inputData}
         setInputData={setInputData}
-        savedData={savedData}
         filteredData={filteredData}
-        filter={filter}
-        handleFilter={handleFilter}
       />
     </div>
   );

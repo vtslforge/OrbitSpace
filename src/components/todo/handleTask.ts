@@ -5,7 +5,19 @@ import type {
   FilterValue,
 } from "./taskTypes";
 
-import { useEffect, useState, type SubmitEvent } from "react";
+import { useState, type SubmitEvent } from "react";
+import { isRecord, useUserStorage } from "../../shared/hooks/useUserStorage";
+
+function isTaskList(value: unknown): value is taskValuesType[] {
+  return Array.isArray(value) && value.every((task) =>
+    isRecord(task) &&
+    typeof task.id === "string" &&
+    typeof task.title === "string" &&
+    typeof task.description === "string" &&
+    ["High", "Normal", "Low"].includes(task.priority as string) &&
+    typeof task.dueDate === "string",
+  );
+}
 
 /*
  * -----------------------------------------------------------------------------------
@@ -38,28 +50,10 @@ export function useTaskCreation(): useTaskCreationType {
     title: "",
     description: "",
     priority: "Normal",
-    dueDate: "-",
+    dueDate: "",
   });
 
-  const [savedData, setSavedData] = useState<taskValuesType[]>(() => {
-    const savedTasks = localStorage.getItem("savedData");
-
-    if (!savedTasks) {
-      return [];
-    }
-
-    try {
-      return JSON.parse(savedTasks);
-    } catch {
-      return [];
-    }
-  });
-
-  // Save tasks to localStorage whenever savedData changes
-
-  useEffect(() => {
-    localStorage.setItem("savedData", JSON.stringify(savedData));
-  }, [savedData]);
+  const [savedData, setSavedData] = useUserStorage("savedData", [], isTaskList);
 
   // Handle task creation
 
@@ -80,7 +74,7 @@ export function useTaskCreation(): useTaskCreationType {
       title: "",
       description: "",
       priority: "Normal",
-      dueDate: "-",
+      dueDate: "",
     });
   }
 

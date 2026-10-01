@@ -13,22 +13,27 @@ const AddBookmark = ({
   setBookmarkInput,
 }: InputProp) => {
   return (
-    <div>
-      <form
+    <form
         onSubmit={handleBookmarkSave}
-        className="flex w-full max-w-md flex-col gap-3"
+        className="form-stack"
       >
-        <input
+        <label className="form-field">
+          Title
+          <input
+          required
           type="text"
           value={bookmarkInput.title}
           onChange={(e) =>
             setBookmarkInput((prev) => ({ ...prev, title: e.target.value }))
           }
-          placeholder="Title"
-          className="rounded-md border px-3 py-2 outline-none"
-        />
+          placeholder="Resource name"
+          className="field-control"
+          />
+        </label>
 
-        <input
+        <label className="form-field">
+          Description
+          <input
           type="text"
           value={bookmarkInput.description}
           onChange={(e) =>
@@ -37,11 +42,14 @@ const AddBookmark = ({
               description: e.target.value,
             }))
           }
-          placeholder="Description"
-          className="rounded-md border px-3 py-2 outline-none"
-        />
+          placeholder="Why is it useful?"
+          className="field-control"
+          />
+        </label>
 
-        <select
+        <label className="form-field">
+          Type
+          <select
           value={bookmarkInput.category}
           onChange={(e) =>
             setBookmarkInput((prev) => ({
@@ -49,7 +57,7 @@ const AddBookmark = ({
               category: e.target.value as BookmarkType,
             }))
           }
-          className="rounded-md border px-3 py-2 outline-none"
+          className="field-control"
         >
           <option value="Article">Article</option>
           <option value="YouTube">YouTube</option>
@@ -59,8 +67,12 @@ const AddBookmark = ({
           <option value="Course">Course</option>
           <option value="Website">Website</option>
         </select>
+        </label>
 
-        <input
+        <label className="form-field">
+          URL
+          <input
+          required
           type="url"
           value={bookmarkInput.url}
           onChange={(e) =>
@@ -69,18 +81,18 @@ const AddBookmark = ({
               url: e.target.value,
             }))
           }
-          placeholder="URL"
-          className="rounded-md border px-3 py-2 outline-none"
-        />
+          placeholder="https://..."
+          className="field-control"
+          />
+        </label>
 
         <button
           type="submit"
-          className="rounded-md bg-black px-4 py-2 text-white"
+          className="primary-button w-full"
         >
-          Add Bookmark
+          Save bookmark
         </button>
       </form>
-    </div>
   );
 };
 

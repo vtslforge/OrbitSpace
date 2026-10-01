@@ -1,10 +1,22 @@
 import {
-  useEffect,
   useState,
   type Dispatch,
   type SetStateAction,
   type SubmitEvent,
 } from "react";
+import { isRecord, useUserStorage } from "../../../shared/hooks/useUserStorage";
+
+function isCourseList(value: unknown): value is InputType[] {
+  return Array.isArray(value) && value.every((course) =>
+    isRecord(course) &&
+    typeof course.title === "string" &&
+    typeof course.description === "string" &&
+    typeof course.category === "string" &&
+    typeof course.difficulty === "string" &&
+    typeof course.url === "string" &&
+    (course.id === undefined || typeof course.id === "string"),
+  );
+}
 
 export type Category =
   | "None"
@@ -34,7 +46,7 @@ export type UseCourseType = {
 };
 
 export function useCourse(
-  setCurrentWatch?: Dispatch<SetStateAction<InputType[] | undefined>>,
+  setCurrentWatch?: Dispatch<SetStateAction<InputType[]>>,
 ) {
   const [inputValue, setInputValue] = useState<InputType>({
     title: "",
@@ -44,25 +56,13 @@ export function useCourse(
     url: "",
   });
 
-  const [savedCourse, setSavedCourse] = useState<InputType[]>(() => {
-    const savedCourse = localStorage.getItem("savedCourse");
-    if (!savedCourse) {
-      return [];
-    }
-
-    try {
-      return JSON.parse(savedCourse);
-    } catch {
-      return [];
-    }
-  });
-
-  useEffect(() => {
-    localStorage.setItem("savedCourse", JSON.stringify(savedCourse));
-  }, [savedCourse]);
+  const [savedCourse, setSavedCourse] = useUserStorage("savedCourse", [], isCourseList);
 
   function handleSave(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
+    if (inputValue.category === "None") {
+      return;
+    }
     const newCourse: InputType = {
       ...inputValue,
       id: crypto.randomUUID(),
@@ -82,7 +82,7 @@ export function useCourse(
   function handleDelete(id: string) {
     setSavedCourse((prev) => prev.filter((course) => course.id !== id));
     setCurrentWatch?.((prev) =>
-      prev?.filter((course) => course.id !== id),
+      prev.filter((course) => course.id !== id),
     );
   }
 

@@ -1,4 +1,5 @@
 import { type PriorityTaskProps } from "../dashboardTypes";
+import { Link } from "react-router-dom";
 
 const priorityOrder = { High: 0, Normal: 1, Low: 2 } as const;
 
@@ -12,17 +13,18 @@ const PriorityTask = ({ tasks }: PriorityTaskProps) => {
     .slice(0, 5);
 
   return (
-    <section className="w-full border px-8 py-8">
-      <h2 className="text-lg font-semibold">Priority Tasks</h2>
-
-      <div className="mt-4 flex gap-4 overflow-x-auto pb-2">
+    <section>
+      <div className="priority-task-list">
         {priorityTasks.length === 0 ? (
-          <p className="text-sm text-gray-500">No tasks found.</p>
+          <div className="empty-state">
+            <p className="text-sm text-gray-500">No tasks yet. Make a plan for what comes next.</p>
+            <Link className="section-link" to="/todo">Create a task <span aria-hidden="true">→</span></Link>
+          </div>
         ) : (
           priorityTasks.map((task) => (
             <article
               key={task.id}
-              className=" aspect-square flex min-w-72 shrink-0 flex-col gap-4 rounded-lg border border-gray-200 bg-white p-4"
+              className="priority-task-item"
             >
               <div className="min-w-0">
                 <h3 className="truncate text-sm font-semibold text-gray-900">
@@ -40,13 +42,7 @@ const PriorityTask = ({ tasks }: PriorityTaskProps) => {
                 </span>
 
                 <span
-                  className={`rounded-full px-2.5 py-1 text-xs font-medium ${
-                    task.priority === "High"
-                      ? "bg-red-100 text-red-700"
-                      : task.priority === "Normal"
-                        ? "bg-blue-100 text-blue-700"
-                        : "bg-gray-100 text-gray-600"
-                  }`}
+                  className={`priority-tag ${task.priority.toLowerCase()}`}
                 >
                   {task.priority}
                 </span>

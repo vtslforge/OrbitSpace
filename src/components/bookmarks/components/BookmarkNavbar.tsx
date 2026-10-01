@@ -5,12 +5,15 @@ type BookmarkNavbarProps = {
 
 const BookmarkNavbar = ({ toggle, toggleUi }: BookmarkNavbarProps) => {
   return (
-    <main className="w-full h-40 border flex justify-center items-center">
-      Bookmarks
-      <button onClick={toggleUi} className="border p-3" type="button">
-        {toggle ? "Hide bookmarks" : "Show bookmarks"}
+    <header className="page-header">
+      <div>
+        <h1 className="page-title">Bookmarks</h1>
+        <p className="page-subtitle">A considered collection of links worth returning to.</p>
+      </div>
+      <button onClick={toggleUi} className="primary-button" type="button">
+        {toggle ? "Close form" : "+ Add bookmark"}
       </button>
-    </main>
+    </header>
   );
 };
 

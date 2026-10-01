@@ -8,13 +8,18 @@ type NavProp = {
 
 const CourseNav = ({ toggle, toggleUi, savedCourse }: NavProp) => {
   return (
-    <main className="w-full h-40 border flex justify-center items-center">
-      CourseNav
-      <button onClick={toggleUi} className="border p-3" type="button">
-        {toggle ? "hide course" : "show course"}
-      </button>
-      <p>Total courses : {savedCourse.length}</p>
-    </main>
+    <header className="page-header">
+      <div>
+        <h1 className="page-title">Learning library</h1>
+        <p className="page-subtitle">Keep your courses and learning resources in one place.</p>
+      </div>
+      <div className="page-header-action">
+        <span className="library-count">{savedCourse.length} saved</span>
+        <button onClick={toggleUi} className="primary-button" type="button">
+          {toggle ? "Close form" : "+ Add course"}
+        </button>
+      </div>
+    </header>
   );
 };
 

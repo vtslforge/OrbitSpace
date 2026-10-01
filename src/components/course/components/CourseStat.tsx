@@ -1,4 +1,5 @@
 import type { InputType } from "../hooks/useCourse";
+import { Link } from "react-router-dom";
 
 type StatProp = {
   currentWatch: InputType[] | undefined;
@@ -7,74 +8,40 @@ type StatProp = {
 
 const CourseStat = ({ currentWatch, handleCurrentNavAndValue }: StatProp) => {
   return (
-    <main className="w-full border border-gray-700 bg-gray-950 p-6">
-      <div className="mx-auto max-w-4xl">
-        <h2 className="mb-5 text-2xl font-semibold text-white">
-          Current Watch
-        </h2>
+    <section className="dashboard-section">
+      <div className="section-heading">
+        <div>
+          <h2>Continue learning</h2>
+          <p>Pick up where you left off</p>
+        </div>
+        <Link className="section-link" to="/library">Library <span aria-hidden="true">→</span></Link>
+      </div>
 
         {currentWatch?.length ? (
-          <div className="grid gap-4">
+          <div>
             {currentWatch.map((watch) => (
               <div
                 key={watch.id ?? watch.url}
-                className="rounded-xl border border-gray-700 bg-gray-900 p-5"
+                className="watch-row"
               >
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <div>
-                    <p className="text-xs uppercase text-gray-500">Title</p>
-                    <p className="mt-1 text-white">{watch.title}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs uppercase text-gray-500">Category</p>
-                    <p className="mt-1 text-white">{watch.category}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs uppercase text-gray-500">
-                      Difficulty
-                    </p>
-                    <p className="mt-1 text-white">{watch.difficulty}</p>
-                  </div>
-
-                  <div>
-                    <p className="text-xs uppercase text-gray-500">ID</p>
-                    <p className="mt-1 truncate text-white">
-                      {watch.id ?? "No ID"}
-                    </p>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <p className="text-xs uppercase text-gray-500">
-                      Description
-                    </p>
-                    <p className="mt-1 text-gray-300">
-                      {watch.description || "No description"}
-                    </p>
-                  </div>
-
-                  <div className="sm:col-span-2">
-                    <p className="text-xs uppercase text-gray-500">URL</p>
-                    <p className="mt-1 break-all text-gray-300">{watch.url}</p>
-                  </div>
+                <div className="min-w-0">
+                  <p className="text-xs font-semibold uppercase text-gray-400">{watch.category} · {watch.difficulty}</p>
+                  <h3 className="mt-1 truncate text-sm font-semibold text-gray-900">{watch.title}</h3>
+                  {watch.description && <p className="mt-1 line-clamp-1 text-sm text-gray-500">{watch.description}</p>}
+                </div>
                   <button
                     onClick={() => handleCurrentNavAndValue(watch)}
-                    className="text-white"
+                    className="quiet-button shrink-0"
                   >
-                    Continue watching
+                    Resume
                   </button>
-                </div>
               </div>
             ))}
           </div>
         ) : (
-          <div className="rounded-xl border border-dashed border-gray-700 bg-gray-900 p-8 text-center text-gray-500">
-            No course is currently being watched.
-          </div>
+          <div className="empty-state"><p className="text-sm text-gray-500">Open a course from your library and it will be ready here.</p></div>
         )}
-      </div>
-    </main>
+    </section>
   );
 };
 
