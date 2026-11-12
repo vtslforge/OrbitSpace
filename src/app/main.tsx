@@ -1,30 +1,13 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { BrowserRouter } from "react-router-dom";
-import { ClerkProvider } from "@clerk/react";
-import "../../src/styles/index.css";
+import "../styles/index.css";
 import App from "./App";
-
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <ClerkProvider
-        signInUrl="/sign-in"
-        signUpUrl="/sign-up"
-        localization={{
-          signIn: {
-            start: {
-              title: "Welcome To OrbitSpace",
-              subtitle: "Sign in to continue",
-            },
-          },
-        }}
-        publishableKey={PUBLISHABLE_KEY}
-      >
-        <App />
-      </ClerkProvider>
+      <App />
     </BrowserRouter>
   </StrictMode>,
 );

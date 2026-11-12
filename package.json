@@ -10,9 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@clerk/localizations": "^4.16.0",
-    "@clerk/react": "^6.15.1",
     "@tailwindcss/vite": "^4.3.3",
+    "lucide-react": "^1.70.0",
     "media-chrome": "^4.19.3",
     "react": "^19.2.8",
     "react-dom": "^19.2.8",
